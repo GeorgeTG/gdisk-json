@@ -11,10 +11,10 @@ MBR_LIB_OBJS=$(MBR_LIBS:=.o)
 LIB_HEADERS=$(LIB_NAMES:=.h)
 DEPEND= makedepend $(CXXFLAGS)
 
-all:	cgdisk gdisk sgdisk fixparts
+all:	sgdisk
 
 sgdisk: $(LIB_OBJS) sgdisk.o gptcl.o
-	$(CXX) $(LIB_OBJS) sgdisk.o gptcl.o $(LDFLAGS) -luuid -lpopt -o sgdisk
+	$(CXX) $(LIB_OBJS) sgdisk.o gptcl.o $(LDFLAGS) -luuid -lpopt -ljsoncpp -o sgdisk
 #	$(CXX) $(LIB_OBJS) sgdisk.o gptcl.o $(LDFLAGS) -licuio -licuuc -luuid -lpopt -o sgdisk
 
 test:

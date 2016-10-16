@@ -127,7 +127,7 @@ public:
    // Display data....
    void ShowAPMState(void);
    void ShowGPTState(void);
-   void DisplayGPTData(void);
+   void DisplayGPTData(bool toJson);
    void DisplayMBRData(void) {protectiveMBR.DisplayMBRData();}
    void ShowPartDetails(uint32_t partNum);
 
@@ -156,7 +156,7 @@ public:
    void RecomputeCHS(void);
    int Align(uint64_t* sector);
    void SetProtectiveMBR(BasicMBRData & newMBR) {protectiveMBR = newMBR;}
-   
+
    // Return data about the GPT structures....
    WhichToUse GetState(void) {return whichWasUsed;}
    int GetPartRange(uint32_t* low, uint32_t* high);
