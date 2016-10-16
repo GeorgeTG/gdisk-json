@@ -143,7 +143,7 @@ int GPTDataCL::DoOptions(int argc, char* argv[]) {
                 json = 1;
                 break;
             case 'V':
-                cout << "GPT fdisk (sgdisk) version " << GPTFDISK_VERSION << "\n\n";
+                cout << "GPT fdisk (sgdisk-json) version " << GPTFDISK_VERSION << "\n\n";
                 break;
             default:
                 break;
