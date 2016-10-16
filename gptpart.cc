@@ -288,10 +288,10 @@ break_converter : ;
             return (other.firstLBA < firstLBA);
     } // GPTPart::operator<()
 
-    Json::Value GPTPart::GetJson(int partNum, uint32_t blockSize){
+    Json::Value GPTPart::JsonSummary(int partNum, uint32_t blockSize){
         string sizeInIeee;
         UnicodeString description;
-        size_t i;
+        
         if (firstLBA != 0) {
             Json::Value partJson;
             sizeInIeee = BytesToIeee(lastLBA - firstLBA + 1, blockSize);
@@ -444,6 +444,30 @@ break_converter : ;
             cout.fill(' ');
         }  // if
     } // GPTPart::ShowDetails()
+
+    Json::Value GPTPart::JsonDetails(uint32_t blockSize) {
+        uint64_t size;
+
+        if (firstLBA != 0) {
+            Json::Value partDetails;
+            partDetails["type"] = partitionType.GetHexType();
+            partDetails["type_name"] = partitionType.TypeName();
+            partDetails["guid"] = uniqueGUID.AsString();
+            partDetails["first"] = firstLBA;
+            partDetails["first_bytes"] = BytesToIeee(firstLBA, blockSize);
+            partDetails["last"] = lastLBA;
+            partDetails["last_bytes"] = BytesToIeee(lastLBA, blockSize);
+            size = (lastLBA - firstLBA + 1);
+            partDetails["total_sectors"] = size;
+            partDetails["size"] = BytesToIeee(size, blockSize);
+            partDetails["attrs"] = attributes.GetJson();
+            partDetails["name"] = GetDescription();
+            
+            return partDetails;
+        }  else {
+            return Json::Value::null;
+        }
+    } // GPTPart::JsonDetails()
 
     // Blank (delete) a single partition
     void GPTPart::BlankPartition(void) {

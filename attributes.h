@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <string>
+#include <json/json.h>
 
 #ifndef __GPT_ATTRIBUTES
 #define __GPT_ATTRIBUTES
@@ -27,6 +28,7 @@ public:
 
    uint64_t GetAttributes(void) const {return attributes;}
    void DisplayAttributes(void);
+   Json::Value GetJson(void);
    void ShowAttributes(const uint32_t partNum);
 
    void ChangeAttributes(void);

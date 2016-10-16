@@ -127,9 +127,9 @@ public:
    // Display data....
    void ShowAPMState(void);
    void ShowGPTState(void);
-   void DisplayGPTData(bool toJson);
+   void DisplayGPTData(int toJson);
    void DisplayMBRData(void) {protectiveMBR.DisplayMBRData();}
-   void ShowPartDetails(uint32_t partNum);
+   void ShowPartDetails(uint32_t partNum, int toJson);
 
    // Convert between GPT and other formats
    virtual WhichToUse UseWhichPartitions(void);

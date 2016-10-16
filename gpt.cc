@@ -1433,7 +1433,7 @@ void GPTData::ShowGPTState(void) {
 } // GPTData::ShowGPTState()
 
 // Display the basic GPT data
-void GPTData::DisplayGPTData(bool toJson) {
+void GPTData::DisplayGPTData(int toJson) {
     uint32_t i;
     uint64_t temp, totalFree;
     
@@ -1453,13 +1453,16 @@ void GPTData::DisplayGPTData(bool toJson) {
 
         Json::Value partsArray;
         for (i = 0; i < numParts; i++) {
-            tempPart = partitions[i].GetJson(i, blockSize);
+            tempPart = partitions[i].JsonSummary(i, blockSize);
             if (tempPart != Json::Value::null){
+                // Only add if not an empty partition
                 partsArray.append(tempPart);
             }
         }
         root["parts"] = partsArray;
-        cout << root << endl;
+
+        Json::FastWriter writer; 
+        cout << writer.write(root) << endl;
     } else {
         cout << "Disk " << device << ": " << diskSize << " sectors, "
             << BytesToIeee(diskSize, blockSize) << "\n";
@@ -1480,11 +1483,17 @@ void GPTData::DisplayGPTData(bool toJson) {
 } // GPTData::DisplayGPTData()
 
 // Show detailed information on the specified partition
-void GPTData::ShowPartDetails(uint32_t partNum) {
-    if ((partNum < numParts) && !IsFreePartNum(partNum)) {
-        partitions[partNum].ShowDetails(blockSize);
+void GPTData::ShowPartDetails(uint32_t partNum, int toJson) {
+    if (toJson && (partNum < numParts) && !IsFreePartNum(partNum)) {
+        Json::FastWriter writer; 
+        cout << writer.write(partitions[partNum].JsonDetails(blockSize)) << endl;
     } else {
-        cout << "Partition #" << partNum + 1 << " does not exist.\n";
+        if ((partNum < numParts) && !IsFreePartNum(partNum)) {
+                
+            partitions[partNum].ShowDetails(blockSize);
+        } else {
+            cout << "Partition #" << partNum + 1 << " does not exist.\n";
+        } // if
     } // if
 } // GPTData::ShowPartDetails()
 

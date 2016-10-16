@@ -265,7 +265,7 @@ int GPTDataCL::DoOptions(int argc, char* argv[]) {
                                   saveData = 1;
                               break;
                     case 'i':
-                              ShowPartDetails(infoPartNum - 1);
+                              ShowPartDetails(infoPartNum - 1, json);
                               break;
                     case 'l':
                               LoadBackupFile(backupFile, saveData, neverSaveData);
