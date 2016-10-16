@@ -15,16 +15,12 @@ all:	sgdisk
 
 sgdisk: $(LIB_OBJS) sgdisk.o gptcl.o
 	$(CXX) $(LIB_OBJS) sgdisk.o gptcl.o $(LDFLAGS) -luuid -lpopt -ljsoncpp -o sgdisk
-#	$(CXX) $(LIB_OBJS) sgdisk.o gptcl.o $(LDFLAGS) -licuio -licuuc -luuid -lpopt -o sgdisk
-
-test:
-	./gdisk_test.sh
 
 lint:	#no pre-reqs
 	lint $(SRCS)
 
 clean:	#no pre-reqs
-	rm -f core *.o *~ gdisk sgdisk cgdisk fixparts
+	rm -f core *.o *~ sgdisk
 
 # what are the source dependencies
 depend: $(SRCS)
