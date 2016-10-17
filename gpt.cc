@@ -1462,7 +1462,7 @@ void GPTData::DisplayGPTData(int toJson) {
         root["parts"] = partsArray;
 
         Json::FastWriter writer; 
-        cout << writer.write(root) << endl;
+        cout << writer.write(root);
     } else {
         cout << "Disk " << device << ": " << diskSize << " sectors, "
             << BytesToIeee(diskSize, blockSize) << "\n";
@@ -1486,7 +1486,7 @@ void GPTData::DisplayGPTData(int toJson) {
 void GPTData::ShowPartDetails(uint32_t partNum, int toJson) {
     if (toJson && (partNum < numParts) && !IsFreePartNum(partNum)) {
         Json::FastWriter writer; 
-        cout << writer.write(partitions[partNum].JsonDetails(blockSize)) << endl;
+        cout << writer.write(partitions[partNum].JsonDetails(blockSize));
     } else {
         if ((partNum < numParts) && !IsFreePartNum(partNum)) {
                 
