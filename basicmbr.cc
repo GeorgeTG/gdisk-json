@@ -1501,7 +1501,7 @@ uint64_t BasicMBRData::GetFirstSector(int i) {
       retval = thePart->GetStartLBA();
    } else
       retval = UINT32_C(0);
-      return retval;
+  return retval;
 } // BasicMBRData::GetFirstSector()
 
 uint64_t BasicMBRData::GetLength(int i) {
@@ -1513,7 +1513,7 @@ uint64_t BasicMBRData::GetLength(int i) {
       retval = thePart->GetLengthLBA();
    } else
       retval = UINT64_C(0);
-      return retval;
+  return retval;
 } // BasicMBRData::GetLength()
 
 /***********************
