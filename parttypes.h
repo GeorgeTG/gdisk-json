@@ -61,6 +61,7 @@ public:
 
    // Information relating to all type data
    void ShowAllTypes(int maxLines = 21) const;
+   void ShowAllTypesJSON(void) const;
    int Valid(uint16_t code) const;
 };
 

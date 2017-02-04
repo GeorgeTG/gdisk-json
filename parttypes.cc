@@ -12,6 +12,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <iostream>
+#include <json/json.h>
 #include "parttypes.h"
 
 using namespace std;
@@ -424,6 +425,22 @@ void PartType::ShowAllTypes(int maxLines) const {
    cout.fill(' ');
    cout << "\n" << dec;
 } // PartType::ShowAllTypes(int maxLines)
+
+
+void PartType::ShowAllTypesJSON() const {
+    AType* thisType = allTypes;
+    Json::Value typesJson;
+
+    while (thisType != NULL) {
+        if (thisType->display == 1) { // show it
+            typesJson[thisType->name] = thisType->MBRType;
+        } // if
+        thisType = thisType->next;
+    } // while
+
+    Json::FastWriter writer; 
+    cout << writer.write(typesJson);
+}
 
 // Returns 1 if code is a valid extended MBR code, 0 if it's not
 int PartType::Valid(uint16_t code) const {

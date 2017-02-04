@@ -63,7 +63,8 @@ void GPTDataCL::LoadBackupFile(string backupFile, int &saveData, int &neverSaveD
 int GPTDataCL::DoOptions(int argc, char* argv[]) {
     GPTData secondDevice;
     int opt, numOptions = 0, saveData = 0, neverSaveData = 0;
-    int partNum = 0, newPartNum = -1, saveNonGPT = 1, retval = 0, pretend = 0, json = 0;
+    int partNum = 0, newPartNum = -1, saveNonGPT = 1;
+    int retval = 0, pretend = 0, json = 0, listParts = 0;
     uint64_t low, high, startSector, endSector, sSize;
     uint64_t temp; // temporary variable; free to use in any case
     char *device;
@@ -128,19 +129,19 @@ int GPTDataCL::DoOptions(int argc, char* argv[]) {
     // (o, z, or Z) options, and to flag presence of a --pretend/-P option
     while ((opt = poptGetNextOpt(poptCon)) > 0) {
         switch (opt) {
+            case 'j':
+                json = 1;
+                break;
             case 'A':
                 cmd = GetString(attributeOperation, 1);
                 if (cmd == "list")
                     Attributes::ListAttributes();
                 break;
             case 'L':
-                typeHelper.ShowAllTypes(0);
+                listParts = 1;
                 break;
             case 'P':
                 pretend = 1;
-                break;
-            case 'j':
-                json = 1;
                 break;
             case 'V':
                 cout << "GPT fdisk (sgdisk-json) version " << GPTFDISK_VERSION << "\n\n";
@@ -150,6 +151,12 @@ int GPTDataCL::DoOptions(int argc, char* argv[]) {
         } // switch
         numOptions++;
     } // while
+    
+    if (listParts && json) {
+        typeHelper.ShowAllTypesJSON();
+    } else if (listParts) {
+        typeHelper.ShowAllTypes(0);
+    }
 
     // Assume first non-option argument is the device filename....
     device = (char*) poptGetArg(poptCon);
